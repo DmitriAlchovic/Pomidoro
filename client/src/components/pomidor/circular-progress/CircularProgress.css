@@ -1,0 +1,20 @@
+.time-circle {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center; 
+    align-items: center;
+    overflow: hide;
+   
+    
+    
+   
+}
+.circle{
+    background-color: darkgreen;
+    transform-origin: center;
+    transform: rotate(-117deg);
+    transition: stroke-dashoffset 0.03s;
+    
+}
+
