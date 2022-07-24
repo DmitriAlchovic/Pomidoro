@@ -25,11 +25,9 @@ const CircularProgress: React.FC<ProgressProps> = ({
     const boxHeight = box.current ? box.current.offsetHeight:0;
     const boxWidth = box.current ? box.current.offsetWidth:0;
     const circleSize = (boxHeight <= boxWidth) ? boxWidth:boxHeight;
-    console.log(boxWidth,'Width', boxHeight,'Heigth', circleSize,'circleSize');
     setSvgWidth(box.current ? circleSize : 0);
     setRadius(svgWidth / 2 - strokeSize);
     setCircumference(2 * Math.PI * radius);
-    console.log(circumference, radius, box.current);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [box, svgWidth, radius, circumference, workTime, windowSize]);

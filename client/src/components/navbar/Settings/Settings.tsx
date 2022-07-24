@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Modal, Button, NavLink,Form } from "react-bootstrap";
-import useConfig from "../../../hooks/userSettings.hook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import './Settings.css';
+import { SettingsProps } from "../../../interfaces"; 
 
-interface Conf { 
-  pomidor:number;
-  rest:number;
-  confHandler:Function;
+interface Conf {
+  time:number;
+  restTime:number;
 }
 
-const Settings: React.FC = () => {
-  const conf:any = useConfig();
+const Settings: React.FC<SettingsProps> = ({conf}) => {
 
   const [modalShow, setModalShow] = useState<boolean>(false);
-  const [newConf, setNewConf] = useState<Conf>(conf); 
+  const [newConf, setNewConf] = useState<any>(conf.item); 
+  
 
  const pressHandler =  (event:React.MouseEvent<HTMLButtonElement>) =>{
     setModalShow(false);
-    newConf.confHandler(newConf.pomidor,newConf.rest);
+    conf.createStorage(newConf);
   }
 
   
 
   const changeHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
-      console.log(event.target.value,modalShow);
+      const value = parseInt(event.target.value)
+      if(!isNaN(value)){
+
       setNewConf({...newConf,[event.target.name]:parseInt(event.target.value)*60});
-      console.log(newConf, 'newConf');
-      
+      }
     }
 
   
@@ -50,9 +50,9 @@ const Settings: React.FC = () => {
         </Modal.Header>
         <Modal.Body>
             <p>Pomidoro size in minutes</p>
-            <input type='number' defaultValue={`${newConf.pomidor/60}`} name='pomidor' min={1} max={100} onChange={changeHandler}></input>
+             <input type='number' value={`${newConf.time/60}`} name='time' min={1} max={100} onChange={changeHandler}></input>
             <p>Rest size in minutes</p>
-            <input type='number' defaultValue={`${newConf.rest/60}`} name='rest' min={1} max={100} onChange={changeHandler}></input>
+            <input type='number' value={`${newConf.restTime/60}`} name='restTime' min={1} max={100} onChange={changeHandler}></input> 
 
         </Modal.Body>
         <Modal.Footer>

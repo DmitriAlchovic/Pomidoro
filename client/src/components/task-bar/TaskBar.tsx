@@ -3,11 +3,20 @@ import { InputGroup, FormControl, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus,faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import './task-bar.css';
+import useStorage from "../../hooks/storage.hook";
 
 const TaskBar = () => {
+  const storedTasks = useStorage('tasks',[]);
   const [task, setTask] = useState<string>("");
   const [taskArray, setTaskArray] = useState<string[]>([]);
   const [taskStack, setTaskStack] = useState<ReactElement[]>([]);
+
+
+  useEffect(()=>{
+      if(storedTasks.item){
+        setTaskArray(storedTasks.item);
+      }
+  },[storedTasks.item])
 
   useEffect(() => {
     const Tasks: ReactElement[] = taskArray.map((currentValue, index) => {
@@ -31,7 +40,7 @@ const TaskBar = () => {
   const pressHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const arr: string[] = taskArray.slice();
     arr.push(task);
-    setTaskArray(arr);
+    storedTasks.createStorage(arr);
     setTask("");
   };
 
@@ -39,7 +48,8 @@ const TaskBar = () => {
     if (event.key === "Enter" && task) {
       const arr: string[] = taskArray.slice();
       arr.push(task);
-      setTaskArray(arr);
+      storedTasks.deleteStorage();
+      storedTasks.createStorage(arr);
       setTask("");
     }
   };
@@ -48,7 +58,8 @@ const TaskBar = () => {
     console.log(event.currentTarget.id);
 
     const arr: string[] = [...taskArray.slice(0,parseInt(event.currentTarget.id)),...taskArray.slice(parseInt(event.currentTarget.id)+1)]
-    setTaskArray(arr);
+    storedTasks.deleteStorage();
+    storedTasks.createStorage(arr);
   } 
 
   return (

@@ -1,8 +1,9 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Settings from "./Settings/Settings";
+import { NavbarProps } from "../../interfaces";
 
-const NavbarTop = () => {
+const NavbarTop:React.FC<NavbarProps> = ({conf}) => {
   return (
     <Navbar bg="danger" expand="lg">
       <Container>
@@ -11,7 +12,7 @@ const NavbarTop = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#reset-all">Reset all</Nav.Link>
-            <Settings />
+            <Settings conf={conf} />
           </Nav>
         </Navbar.Collapse>
       </Container>
