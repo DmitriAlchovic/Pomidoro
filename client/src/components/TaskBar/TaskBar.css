@@ -1,0 +1,22 @@
+.delete-button{
+    float:right;
+}
+
+.tasksContainer{
+    margin-top: 40px;
+    width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content:  center; 
+}
+
+.tasksBar{
+    width: 1000px;
+}
+
+@media screen and (max-width: 768px) {
+    .tasksBar{
+    width: 100%;
+}
+
+}
