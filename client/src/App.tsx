@@ -1,28 +1,27 @@
-import React,{useState,useEffect} from "react";
-import Pomidor from "./components/pomidor/Pomidor";
-import NavbarTop from "./components/navbar/Navbar";
-import "bootstrap/dist/css/bootstrap.min.css";
-import TaskBar from "./components/task-bar/TaskBar";
+import React, { useState, useEffect } from 'react';
+import Pomidor from './components/Pomidor/Pomidor';
+import NavbarTop from './components/Navbar/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import TaskBar from './components/TaskBar/TaskBar';
 import './App.css';
-import useStorage from "./hooks/storage.hook";
+import useStorage from './hooks/storage.hook';
 
 const DEFAULT_CONFIG = {
-  time:600,
-  restTime:300
-}
+  time: 600,
+  restTime: 300,
+};
 
 function App() {
-  
-  const conf:any = useStorage('config',DEFAULT_CONFIG);
+  const conf: any = useStorage('config', DEFAULT_CONFIG);
   const [workTime, setWorkTime] = useState<boolean>(true);
   const [time, setTime] = useState<number>(1);
   const [timerOn, setTimeOn] = useState<boolean>(false);
-  
-   useEffect(()=>{
-    if(conf.item){
-      setTime(conf.item.time)
+
+  useEffect(() => {
+    if (conf.item) {
+      setTime(conf.item.time);
     }
-  },[conf.item]) 
+  }, [conf.item]);
 
   useEffect(() => {
     if (timerOn && time > 0) {
@@ -39,19 +38,27 @@ function App() {
     }
   }, [timerOn, time, workTime, conf.item]);
 
-  const toggleTimer = (timerStatus:boolean) =>{
-    setTimeOn(timerStatus)
-  }
+  const toggleTimer = (timerStatus: boolean) => {
+    setTimeOn(timerStatus);
+  };
 
-  
-  const changeTimer = (seconds:number)=>{
-    setTime(seconds)
-  }
+  const changeTimer = (seconds: number) => {
+    setTime(seconds);
+  };
 
   return (
     <div className="App">
-      {conf.item &&<NavbarTop conf={conf} />}
-      {conf.item&&<Pomidor time={time} timerOn={timerOn} workTime={workTime} toggleTimer={toggleTimer} conf={conf} changeTimer={changeTimer} />}
+      {conf.item && <NavbarTop conf={conf} />}
+      {conf.item && (
+        <Pomidor
+          time={time}
+          timerOn={timerOn}
+          workTime={workTime}
+          toggleTimer={toggleTimer}
+          conf={conf}
+          changeTimer={changeTimer}
+        />
+      )}
       <TaskBar />
     </div>
   );
